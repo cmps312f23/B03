@@ -13,9 +13,15 @@ object CovidStatRepo {
             .decodeFromString(contentOfTheFile)
     }
 
-    fun finCountry(country: String) = covidStats.find { it.country == country }
+    fun findCountry(country: String) = covidStats.find { it.country == country }
+    fun totalDeath() =
+        covidStats.fold(0) { acc: Int, b: CovidStat -> (acc + (b.totalDeaths ?: 0)) } }
+
 }
+
 fun main(args: Array<String>) {
 //    println(CovidStatRepo.covidStats)
     println(CovidStatRepo.finCountry("India"))
+
+//    [1,2,3,4,5].filter().reduce()
 }

@@ -21,7 +21,7 @@ fun main() {
     b.isAnotherFoo()
 }
 
-class A {
+open class A {
     fun foo() {
 
     }
