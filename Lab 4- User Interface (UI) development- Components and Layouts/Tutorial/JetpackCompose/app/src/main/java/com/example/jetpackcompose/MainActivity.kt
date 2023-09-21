@@ -7,9 +7,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -54,8 +57,16 @@ fun MyApp(modifier: Modifier = Modifier) {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(color = MaterialTheme.colorScheme.primary , modifier = modifier.padding(vertical = 4.dp , horizontal = 8.dp)) {
-        Text(text = "Hello Mr. $name!", modifier = modifier)
+    Surface(color = MaterialTheme.colorScheme.primary ,
+        modifier = modifier
+            .padding(vertical = 4.dp, horizontal = 8.dp)
+            .fillMaxWidth()) {
+        Row {
+            Text(text = "Hello Mr. $name!", modifier = modifier.padding(24.dp))
+            ElevatedButton(onClick = { /*TODO*/ }) {
+                Text(text = "Show More")
+            }
+        }
     }
 }
 
