@@ -62,7 +62,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             .padding(vertical = 4.dp, horizontal = 8.dp)
             .fillMaxWidth()) {
         Row {
-            Text(text = "Hello Mr. $name!", modifier = modifier.padding(24.dp))
+            Text(text = "Hello Mr. $name!", modifier = modifier.padding(24.dp).weight(1f))
             ElevatedButton(onClick = { /*TODO*/ }) {
                 Text(text = "Show More")
             }
