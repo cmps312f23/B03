@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,23 +46,38 @@ class MainActivity : ComponentActivity() {
 fun MyApp(modifier: Modifier = Modifier) {
 
     var names = (1..20).map { "Name $it" }
+    var showOnboarding by rememberSaveable { mutableStateOf(true) }
+
 
     Surface(
         color = MaterialTheme.colorScheme.background,
         modifier = modifier
     ) {
-        LazyColumn {
-            items(names) {
-                Greeting(it)
-            }
+        if (showOnboarding)
+             OnboardingScreen(){
+                 showOnboarding = !showOnboarding
+             }
+        else
+            LazyColumn {
+                items(names) {
+                    Greeting(it)
+                }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun OnboardingScreen(modifier: Modifier = Modifier){
-
+fun OnboardingScreen(modifier: Modifier = Modifier , changeShowOnBoard: (Boolean) -> Unit = {}) {
+    Surface {
+       Column(verticalArrangement = Arrangement.Center,
+           horizontalAlignment = Alignment.CenterHorizontally) {
+           Text(text = "Welcome to Jetpack Compose", modifier = modifier)
+           ElevatedButton(onClick = { changeShowOnBoard(false) }) {
+               Text(text = "Continue")
+           }
+       }
+    }
 }
 
 @Composable
