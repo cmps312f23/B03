@@ -1,6 +1,8 @@
 package com.example.jetpackcompose
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -17,6 +19,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,7 +34,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackComposeTheme {
-                    MyApp(Modifier.fillMaxSize())
+                MyApp(Modifier.fillMaxSize())
             }
         }
     }
@@ -42,8 +49,8 @@ fun MyApp(modifier: Modifier = Modifier) {
         color = MaterialTheme.colorScheme.background,
         modifier = modifier
     ) {
-        LazyColumn{
-            items(names){
+        LazyColumn {
+            items(names) {
                 Greeting(it)
             }
         }
@@ -57,14 +64,28 @@ fun MyApp(modifier: Modifier = Modifier) {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(color = MaterialTheme.colorScheme.primary ,
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
+    Surface(
+        color = MaterialTheme.colorScheme.primary,
         modifier = modifier
             .padding(vertical = 4.dp, horizontal = 8.dp)
-            .fillMaxWidth()) {
+            .fillMaxWidth()
+    ) {
         Row {
-            Text(text = "Hello Mr. $name!", modifier = modifier.padding(24.dp).weight(1f))
-            ElevatedButton(onClick = { /*TODO*/ }) {
-                Text(text = "Show More")
+            Text(
+                text = "Hello Mr. $name!", modifier = modifier
+                    .padding(24.dp)
+                    .weight(1f)
+            )
+            Text(
+                text = "Bio : This person was born in the year of bla bla bla and he gradualted from bla blu bla"
+            )
+            ElevatedButton(onClick = {
+                expanded = !expanded
+                Log.d("ButtonInfo", "I am clicked from : $name , value of expanded = $expanded")
+            } , modifier = modifier.padding(24.dp)) {
+                Text(text = if(expanded) "Show Less" else "Show More")
             }
         }
     }
