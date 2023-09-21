@@ -54,12 +54,13 @@ fun MyApp(modifier: Modifier = Modifier) {
                 Greeting(it)
             }
         }
-//       Column {
-//           names.forEach {
-//               Greeting(it)
-//           }
-//       }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OnboardingScreen(modifier: Modifier = Modifier){
+
 }
 
 @Composable
@@ -73,14 +74,17 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             .fillMaxWidth()
     ) {
         Row {
-            Column(modifier = Modifier
-                .weight(1f)
-                .padding(10.dp)) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(10.dp)
+            ) {
                 Text(
                     text = "Hello Mr. $name!",
                     modifier = modifier.padding(bottom = 10.dp)
                 )
-                Text(text = "Bio : This person was born in the year of bla bla bla and he gradualted from bla blu bla")
+                if (expanded)
+                    Text(text = "Bio : This person was born in the year of bla bla bla and he gradualted from bla blu bla")
             }
             ElevatedButton(onClick = {
                 expanded = !expanded
@@ -91,7 +95,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
