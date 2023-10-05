@@ -5,7 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.stadiums.repo.StadiumRepo
+import com.example.stadiums.ui.StadiumList
+import com.example.stadiums.ui.TopBar
 import com.example.stadiums.ui.theme.StadiumsTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,13 +37,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
 fun MyApp(modifier: Modifier = Modifier) {
     var stadiums = StadiumRepo.getStadiums(LocalContext.current)
-    Column {
-        stadiums.forEach {
-            Text(text = it.name)
-        }
+    Scaffold(topBar = { TopBar() }) {
+        StadiumList(
+            stadiums = stadiums, modifier = modifier.padding(it)
+        )
     }
 }

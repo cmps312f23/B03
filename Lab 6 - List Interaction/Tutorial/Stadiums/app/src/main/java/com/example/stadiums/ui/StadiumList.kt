@@ -32,9 +32,13 @@ import com.example.stadiums.ui.theme.StadiumsTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun StadiumList(stadiums: List<Stadium>) {
+fun StadiumList(
+    stadiums: List<Stadium>,
+    modifier: Modifier = Modifier
+) {
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(2),
+        modifier = modifier
     ) {
         items(stadiums) {
             StadiumCard(it)
@@ -65,7 +69,7 @@ fun StadiumCard(stadium: Stadium) {
             .padding(10.dp)
     ) {
         Column(
-            horizontalAlignment =  Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth()
