@@ -12,16 +12,38 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.stadiums.R
 import com.example.stadiums.model.Stadium
+import com.example.stadiums.repo.StadiumRepo
 import com.example.stadiums.ui.theme.StadiumsTheme
 
+@Composable
+fun StadiumList(stadiums: List<Stadium>) {
+
+}
+
+@Preview
+@Composable
+fun StadiumListPreview() {
+    val stadiums = StadiumRepo.getStadiums(LocalContext.current)
+    StadiumsTheme {
+        StadiumList(stadiums)
+    }
+}
 
 @Composable
 fun StadiumCard(stadium: Stadium) {
+    val imageId = LocalContext.current
+        .resources
+        .getIdentifier(
+            stadium.imageName,
+            "drawable",
+            LocalContext.current.packageName
+        )
     Card(
         modifier = Modifier
             .padding(10.dp)
@@ -33,16 +55,17 @@ fun StadiumCard(stadium: Stadium) {
                 .fillMaxWidth()
         ) {
             Image(
-                painter = painterResource(id = R.drawable.al_rayan),
+                painter = painterResource(id = imageId),
                 contentDescription = "image of stadium",
                 modifier = Modifier
                     .size(150.dp)
                     .padding(10.dp)
             )
             Column {
-                Text(text = stadium.name,
+                Text(
+                    text = stadium.name,
                     style = MaterialTheme.typography.titleLarge
-                    )
+                )
                 Text(text = "City : ${stadium.city}")
                 Text(text = "Status : ${stadium.status}")
                 Text(text = "Capacity : ${stadium.seatingCapacity}")
