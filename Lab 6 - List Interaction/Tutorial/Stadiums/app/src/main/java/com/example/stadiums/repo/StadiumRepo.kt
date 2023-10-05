@@ -28,4 +28,10 @@ object StadiumRepo {
         it.name.contains(query, ignoreCase = true) or it.city.contains(query, ignoreCase = true)
     }
 
+    fun sortStadiums(sortOption : String) = when(sortOption) {
+        "name" -> stadiums.sortedBy { it.name }
+        "city" -> stadiums.sortedBy { it.city }
+        "seatingCapacity" -> stadiums.sortedBy { it.seatingCapacity }
+        else -> stadiums
+    }
 }
