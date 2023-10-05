@@ -1,11 +1,20 @@
 package com.example.stadiums.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,9 +30,16 @@ import com.example.stadiums.model.Stadium
 import com.example.stadiums.repo.StadiumRepo
 import com.example.stadiums.ui.theme.StadiumsTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StadiumList(stadiums: List<Stadium>) {
-
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(2),
+    ) {
+        items(stadiums) {
+            StadiumCard(it)
+        }
+    }
 }
 
 @Preview
@@ -48,8 +64,8 @@ fun StadiumCard(stadium: Stadium) {
         modifier = Modifier
             .padding(10.dp)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        Column(
+            horizontalAlignment =  Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth()
@@ -61,15 +77,15 @@ fun StadiumCard(stadium: Stadium) {
                     .size(150.dp)
                     .padding(10.dp)
             )
-            Column {
-                Text(
-                    text = stadium.name,
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Text(text = "City : ${stadium.city}")
-                Text(text = "Status : ${stadium.status}")
-                Text(text = "Capacity : ${stadium.seatingCapacity}")
-            }
+
+            Text(
+                text = stadium.name,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(text = "City : ${stadium.city}")
+            Text(text = "Status : ${stadium.status}")
+            Text(text = "Capacity : ${stadium.seatingCapacity}")
+
         }
     }
 }
