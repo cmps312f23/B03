@@ -19,6 +19,7 @@ import com.example.stadiums.R
 import com.example.stadiums.model.Stadium
 import com.example.stadiums.ui.theme.StadiumsTheme
 
+
 @Composable
 fun StadiumCard(stadium: Stadium) {
     Card(
