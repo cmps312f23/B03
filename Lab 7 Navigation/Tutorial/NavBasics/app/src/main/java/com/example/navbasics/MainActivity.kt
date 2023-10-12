@@ -52,48 +52,31 @@ fun MyApp(modifier: Modifier = Modifier) {
     var screenNo by remember {
         mutableIntStateOf(1)
     }
+
+    val screens = listOf(
+        Screen.FirstScreen,
+        Screen.SecondScreen,
+        Screen.CartScreen
+    )
     Scaffold(
         bottomBar = {
             NavigationBar {
-                NavigationBarItem(
-                    selected = false,
-                    onClick = {
-                        navController.navigate(Screen.FirstScreen.route)
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = Screen.FirstScreen.icon,
-                            contentDescription = Screen.FirstScreen.title
-                        )
-                    },
-                    label = { Text("Label") }
-                )
-                NavigationBarItem(
-                    selected = false,
-                    onClick = {
-                        navController.navigate(Screen.SecondScreen.route)
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = Screen.SecondScreen.icon,
-                            contentDescription = Screen.SecondScreen.title
-                        )
-                    },
-                    label = { Text("Label") }
-                )
-                NavigationBarItem(
-                    selected = false,
-                    onClick = {
-                        navController.navigate(Screen.CartScreen.route)
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = Screen.CartScreen.icon,
-                            contentDescription = Screen.CartScreen.title
-                        )
-                    },
-                    label = { Text("Label") }
-                )
+
+                screens.forEach {
+                    NavigationBarItem(
+                        selected = false,
+                        onClick = {
+                            navController.navigate(it.route)
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = it.icon,
+                                contentDescription = it.title
+                            )
+                        },
+                        label = { Text("Label") }
+                    )
+                }
             }
         }
     ) {
