@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.navbasics.nav.MyNavHost
 import com.example.navbasics.screen.FirstScreen
+import com.example.navbasics.screen.Screen
 import com.example.navbasics.screen.SecondScreen
 import com.example.navbasics.ui.theme.NavBasicsTheme
 
@@ -50,7 +54,47 @@ fun MyApp(modifier: Modifier = Modifier) {
     }
     Scaffold(
         bottomBar = {
-           
+            NavigationBar {
+                NavigationBarItem(
+                    selected = false,
+                    onClick = {
+                        navController.navigate(Screen.FirstScreen.route)
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = Screen.FirstScreen.icon,
+                            contentDescription = Screen.FirstScreen.title
+                        )
+                    },
+                    label = { Text("Label") }
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = {
+                        navController.navigate(Screen.SecondScreen.route)
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = Screen.SecondScreen.icon,
+                            contentDescription = Screen.SecondScreen.title
+                        )
+                    },
+                    label = { Text("Label") }
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = {
+                        navController.navigate(Screen.CartScreen.route)
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = Screen.CartScreen.icon,
+                            contentDescription = Screen.CartScreen.title
+                        )
+                    },
+                    label = { Text("Label") }
+                )
+            }
         }
     ) {
         MyNavHost(

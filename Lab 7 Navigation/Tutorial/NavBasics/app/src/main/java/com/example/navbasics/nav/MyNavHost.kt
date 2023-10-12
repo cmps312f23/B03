@@ -26,12 +26,5 @@ fun MyNavHost(navController: NavHostController, modifier: Modifier) {
         composable(route = Screen.CartScreen.route) {
             CartScreen()
         }
-
-
-
     }
-        Button(onClick = {
-            navController.navigate("first-screen")}) {
-
-        }
 }
