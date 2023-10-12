@@ -3,8 +3,10 @@ package com.example.navbasics
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -27,8 +29,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.navbasics.nav.MyNavHost
 import com.example.navbasics.screen.FirstScreen
@@ -89,26 +93,39 @@ fun MyApp(modifier: Modifier = Modifier) {
         },
         topBar = {
             TopAppBar(
-                title = { Text(text =  "Nav Basics")},
+                title = {
+                    Box(
+                        modifier = Modifier.padding(10.dp).fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Nav Basics")
+                    }
+                },
                 navigationIcon = {
                     Icon(
-                        imageVector = Icons.Default.Menu ,
-                        contentDescription = "Menu")
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = "Menu",
+                        modifier = Modifier.padding(10.dp)
+                    )
                 },
                 actions = {
                     Icon(
-                        imageVector = Icons.Default.Favorite ,
-                        contentDescription = "Favorites")
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = "Favorites",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
                     Icon(
-                        imageVector = Icons.Default.ShoppingCart ,
-                        contentDescription = "Cart")
+                        imageVector = Icons.Default.ShoppingCart,
+                        contentDescription = "Cart",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+
 
                     Icon(
-                        imageVector = Icons.Default.Search ,
-                        contentDescription = "Search")
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search"
+                    )
                 }
-
-
             )
         }
     ) {
