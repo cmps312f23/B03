@@ -13,14 +13,15 @@ import androidx.compose.ui.unit.sp
 import com.example.navbasics.ui.theme.NavBasicsTheme
 
 @Composable
-fun CartScreen(modifier: Modifier = Modifier) {
+fun CartScreen(modifier: Modifier = Modifier ,
+               productId : Int?, pname : String?) {
     Box(
         Modifier.background(MaterialTheme.colorScheme.tertiary)
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Text(
-            "Cart Screen",
+            "Cart Screen $productId - $pname",
             fontSize = 35.sp,
             color = MaterialTheme.colorScheme.onTertiary
         )
@@ -31,6 +32,6 @@ fun CartScreen(modifier: Modifier = Modifier) {
 @Composable
 fun CartScreenPreview() {
     NavBasicsTheme {
-        CartScreen()
+//        CartScreen()
     }
 }

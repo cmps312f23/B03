@@ -34,6 +34,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.navbasics.nav.MyNavHost
 import com.example.navbasics.screen.FirstScreen
@@ -69,17 +71,26 @@ fun MyApp(modifier: Modifier = Modifier) {
     val screens = listOf(
         Screen.FirstScreen,
         Screen.SecondScreen,
-        Screen.CartScreen
+//        Screen.CartScreen
     )
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
     Scaffold(
         bottomBar = {
             NavigationBar {
 
                 screens.forEach {
                     NavigationBarItem(
-                        selected = false,
+                        selected = it.route ==  navBackStackEntry?.destination?.route,
                         onClick = {
-                            navController.navigate(it.route)
+                            navController.navigate(it.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                    inclusive = true
+                                }
+
+                            }
                         },
                         icon = {
                             Icon(
@@ -87,7 +98,8 @@ fun MyApp(modifier: Modifier = Modifier) {
                                 contentDescription = it.title
                             )
                         },
-                        label = { Text(it.title) }
+                        label = { Text(it.title) },
+                        alwaysShowLabel =  it.route ==  navBackStackEntry?.destination?.route
                     )
                 }
             }
@@ -96,7 +108,9 @@ fun MyApp(modifier: Modifier = Modifier) {
             TopAppBar(
                 title = {
                     Box(
-                        modifier = Modifier.padding(10.dp).fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .fillMaxWidth(),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(text = "Nav Basics")
@@ -118,9 +132,15 @@ fun MyApp(modifier: Modifier = Modifier) {
                     Icon(
                         imageVector = Icons.Default.ShoppingCart,
                         contentDescription = "Cart",
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier
+                            .padding(end = 8.dp)
                             .clickable {
-                                navController.navigate(Screen.CartScreen.route)
+                                navController.navigate("cart-screen/123/banana") {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                        inclusive = true
+                                    }
+                                }
                             }
                     )
 
