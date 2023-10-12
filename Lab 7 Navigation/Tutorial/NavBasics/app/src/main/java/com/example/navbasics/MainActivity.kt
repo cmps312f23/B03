@@ -3,13 +3,26 @@ package com.example.navbasics
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.navbasics.nav.MyNavHost
+import com.example.navbasics.screen.FirstScreen
+import com.example.navbasics.screen.SecondScreen
 import com.example.navbasics.ui.theme.NavBasicsTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyApp("Android")
+                    MyApp()
                 }
             }
         }
@@ -30,17 +43,28 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun MyApp(modifier: Modifier = Modifier) {
+    val navController = rememberNavController()
+    var screenNo by remember {
+        mutableIntStateOf(1)
+    }
+    Scaffold(
+        bottomBar = {
+           
+        }
+    ) {
+        MyNavHost(
+            navController = navController,
+            modifier = modifier.padding(it)
+        )
+
+    }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun GreetingPreview() {
+fun MyAppPreview() {
     NavBasicsTheme {
-        MyApp("Android")
+        MyApp()
     }
 }

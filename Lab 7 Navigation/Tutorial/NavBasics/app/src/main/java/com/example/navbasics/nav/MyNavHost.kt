@@ -2,6 +2,7 @@ package com.example.navbasics.nav
 
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,7 +12,7 @@ import com.example.navbasics.screen.Screen
 import com.example.navbasics.screen.SecondScreen
 
 @Composable
-fun MyNavHost(navController: NavHostController) {
+fun MyNavHost(navController: NavHostController, modifier: Modifier) {
     NavHost(
         navController = navController,
         startDestination = Screen.FirstScreen.route
