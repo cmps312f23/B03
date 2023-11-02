@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    VMBasics("Android")
                 }
             }
         }
@@ -30,7 +30,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun VMBasics(name: String, modifier: Modifier = Modifier) {
+//    we need a state
     Text(
         text = "Hello $name!",
         modifier = modifier
@@ -41,6 +42,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     VMTutorialTheme {
-        Greeting("Android")
+        VMBasics("Android")
     }
 }
