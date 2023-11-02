@@ -12,7 +12,7 @@ import com.cmps312.vmtutorial.repo.StudentRepo
 class StudentViewModel : ViewModel() {
     private val _students = StudentRepo.getStudents().toMutableStateList()
     val students: List<Student> = _students
-
+    
     var selectedStudent by mutableStateOf(_students[0])
 
     fun addStudent(student: Student) {
