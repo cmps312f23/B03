@@ -8,5 +8,5 @@ interface BankService {
     suspend fun getAccounts(cid: Int): List<Account>
     suspend fun getBeneficiaries(cid: Int): List<Beneficiary>
     suspend fun updateBeneficiary(cid: Int, beneficiary: Beneficiary): String
-    suspend fun deleteBeneficiary(cid: Int , account: Int): String
+    suspend fun deleteBeneficiary(cid: Int , accountNo: Int): String
 }
