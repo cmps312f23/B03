@@ -16,6 +16,9 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
 
 //create a class that allows us to talk to the server
@@ -27,7 +30,7 @@ class QuBankService : BankService {
 
     //    create the client
     private val client = HttpClient(OkHttp) {
-        install(ContentNegotiation){
+        install(ContentNegotiation) {
             json(
                 json = Json {
                     ignoreUnknownKeys = true
@@ -37,15 +40,19 @@ class QuBankService : BankService {
         }
     }
 
-    override suspend fun getTransfers(cid: Int): List<Transfer> {
+    override fun getTransfers(cid: Int): Flow<List<Transfer>> = flow {
+        val refreshDelayTime = 10000L
         val url = "$baseUrl/transfers/$cid"
-        return client.get(url).body()
 
+        while(true){
+            emit(client.get(url).body())
+            delay(refreshDelayTime)
+        }
     }
 
     override suspend fun addTransfer(transfer: Transfer): Transfer {
         val url = "$baseUrl/transfers/${transfer.cid}"
-        return client.post(url){
+        return client.post(url) {
             setBody(transfer)
             contentType(ContentType.Application.Json)
         }.body()
@@ -68,7 +75,7 @@ class QuBankService : BankService {
 
     override suspend fun updateBeneficiary(cid: Int, beneficiary: Beneficiary): String {
         val url = "$baseUrl/beneficiaries/$cid"
-        return client.put(url){
+        return client.put(url) {
             setBody(beneficiary)
             contentType(ContentType.Application.Json)
         }.body()

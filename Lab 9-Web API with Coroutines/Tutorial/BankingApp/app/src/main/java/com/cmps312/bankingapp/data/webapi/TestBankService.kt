@@ -1,9 +1,8 @@
-package cmps312.bankingapp.webapi
+package com.cmps312.bankingapp.data.webapi
 
-import com.cmps312.bankingapp.data.model.Transfer
-import com.cmps312.bankingapp.data.webapi.QuBankService
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
