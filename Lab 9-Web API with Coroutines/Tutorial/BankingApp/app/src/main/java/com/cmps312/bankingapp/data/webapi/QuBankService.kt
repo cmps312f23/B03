@@ -8,8 +8,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
+import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -50,23 +52,31 @@ class QuBankService : BankService {
     }
 
     override suspend fun deleteTransfer(cid: Int, transferId: String): String {
-        TODO("Not yet implemented")
+        val url = "$baseUrl/transfers/$cid/$transferId"
+        return client.delete(url).body()
     }
 
     override suspend fun getAccounts(cid: Int): List<Account> {
-        TODO("Not yet implemented")
+        val url = "$baseUrl/accounts/$cid"
+        return client.get(url).body()
     }
 
     override suspend fun getBeneficiaries(cid: Int): List<Beneficiary> {
-        TODO("Not yet implemented")
+        val url = "$baseUrl/beneficiaries/$cid"
+        return client.get(url).body()
     }
 
     override suspend fun updateBeneficiary(cid: Int, beneficiary: Beneficiary): String {
-        TODO("Not yet implemented")
+        val url = "$baseUrl/beneficiaries/$cid"
+        return client.put(url){
+            setBody(beneficiary)
+            contentType(ContentType.Application.Json)
+        }.body()
     }
 
     override suspend fun deleteBeneficiary(cid: Int, accountNo: Int): String {
-        TODO("Not yet implemented")
+        val url = "$baseUrl/beneficiaries/$cid/$accountNo"
+        return client.delete(url).body()
     }
 
 }
