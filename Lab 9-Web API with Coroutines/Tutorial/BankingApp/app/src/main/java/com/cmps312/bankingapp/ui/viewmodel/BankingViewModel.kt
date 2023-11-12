@@ -50,7 +50,7 @@ class BankingViewModel(appContext: Application) : AndroidViewModel(appContext) {
         newTransfer.cid = cid
     }
 
-    fun getAccounts() = viewModelScope.launch {
+    private fun getAccounts() = viewModelScope.launch {
         accounts.clear().let {
             accounts.addAll(quBankService.getAccounts(cid))
         }
