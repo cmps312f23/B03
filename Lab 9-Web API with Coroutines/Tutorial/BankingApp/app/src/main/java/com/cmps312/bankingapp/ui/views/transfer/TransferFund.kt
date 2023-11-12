@@ -34,7 +34,7 @@ fun TransferFund(bankingViewModel: BankingViewModel, onFundTransfer: () -> Unit)
     var fromAccount by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("") }
     //we populate the data
-    bankingViewModel.getAccounts()
+//    bankingViewModel.getAccounts()
 
     var expandable by remember {
         mutableStateOf(false)
