@@ -37,6 +37,7 @@ class QuBankService : BankService {
                 }
             )
         }
+
     }
 
     override fun getTransfers(cid: Int): Flow<List<Transfer>> = flow {

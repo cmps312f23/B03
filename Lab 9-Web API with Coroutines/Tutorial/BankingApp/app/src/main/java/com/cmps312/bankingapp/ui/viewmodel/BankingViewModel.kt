@@ -51,7 +51,10 @@ class BankingViewModel(appContext: Application) : AndroidViewModel(appContext) {
     }
 
     fun getAccounts() = viewModelScope.launch {
-        accounts.addAll(quBankService.getAccounts(cid))
+        accounts.clear().let {
+            accounts.addAll(quBankService.getAccounts(cid))
+        }
+
     }
 
     fun addTransfer(transfer: Transfer) = viewModelScope.launch {
@@ -59,7 +62,9 @@ class BankingViewModel(appContext: Application) : AndroidViewModel(appContext) {
     }
 
     fun getBeneficiaries() = viewModelScope.launch {
-        beneficiaries.addAll(quBankService.getBeneficiaries(cid))
+        beneficiaries.clear().let {
+            beneficiaries.addAll(quBankService.getBeneficiaries(cid))
+        }
     }
 
     fun deleteTransfer(transferId: String) = viewModelScope.launch {
