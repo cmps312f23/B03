@@ -32,6 +32,8 @@ fun TransferDetails(
     onNavigateBack: () -> Unit
 ) {
 
+
+
     val transfer =
         bankingViewModel.transfers.collectAsState().value
             .find { it.transferId == transferId }

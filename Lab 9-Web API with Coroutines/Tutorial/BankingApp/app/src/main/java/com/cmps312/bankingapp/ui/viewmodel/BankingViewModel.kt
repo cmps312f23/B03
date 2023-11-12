@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.cmps312.bankingapp.data.model.Account
-import com.cmps312.bankingapp.data.model.Beneficiary
-import com.cmps312.bankingapp.data.model.Transfer
-import com.cmps312.bankingapp.data.webapi.QuBankService
+import com.cmps312.bankingapp.model.Account
+import com.cmps312.bankingapp.model.Beneficiary
+import com.cmps312.bankingapp.model.Transfer
+import com.cmps312.bankingapp.repository.remote.QuBankService
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch

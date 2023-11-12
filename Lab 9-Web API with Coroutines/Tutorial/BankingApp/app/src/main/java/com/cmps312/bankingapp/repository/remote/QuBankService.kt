@@ -1,9 +1,8 @@
-package com.cmps312.bankingapp.data.webapi
+package com.cmps312.bankingapp.repository.remote
 
-import com.cmps312.bankingapp.data.model.Account
-import com.cmps312.bankingapp.data.model.BankService
-import com.cmps312.bankingapp.data.model.Beneficiary
-import com.cmps312.bankingapp.data.model.Transfer
+import com.cmps312.bankingapp.model.Account
+import com.cmps312.bankingapp.model.Beneficiary
+import com.cmps312.bankingapp.model.Transfer
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp

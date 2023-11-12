@@ -1,9 +1,9 @@
-package com.cmps312.bankingapp.data.respository
+package com.cmps312.bankingapp.repository.local
 
 import android.content.Context
-import com.cmps312.bankingapp.data.model.Account
-import com.cmps312.bankingapp.data.model.Beneficiary
-import com.cmps312.bankingapp.data.model.Transfer
+import com.cmps312.bankingapp.model.Account
+import com.cmps312.bankingapp.model.Beneficiary
+import com.cmps312.bankingapp.model.Transfer
 import kotlinx.serialization.json.Json
 
 class BankRepository(private val context: Context) {

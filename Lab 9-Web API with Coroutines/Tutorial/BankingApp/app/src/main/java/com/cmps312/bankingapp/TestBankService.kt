@@ -1,5 +1,6 @@
-package com.cmps312.bankingapp.data.webapi
+package com.cmps312.bankingapp
 
+import com.cmps312.bankingapp.repository.remote.QuBankService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

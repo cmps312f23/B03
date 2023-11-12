@@ -1,5 +1,8 @@
-package com.cmps312.bankingapp.data.model
+package com.cmps312.bankingapp.repository.remote
 
+import com.cmps312.bankingapp.model.Account
+import com.cmps312.bankingapp.model.Beneficiary
+import com.cmps312.bankingapp.model.Transfer
 import kotlinx.coroutines.flow.Flow
 
 //contract class

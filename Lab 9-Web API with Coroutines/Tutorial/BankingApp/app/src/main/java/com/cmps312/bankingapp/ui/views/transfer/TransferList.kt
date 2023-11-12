@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.cmps312.bankingapp.ui.viewmodel.BankingViewModel
-import com.cmps312.bankingapp.data.model.Transfer
+import com.cmps312.bankingapp.model.Transfer
 import com.cmps312.bankingapp.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
