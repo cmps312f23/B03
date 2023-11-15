@@ -19,6 +19,7 @@ class BankingViewModel(appContext: Application) : AndroidViewModel(appContext) {
     private val cid = 10001
     val accounts = mutableStateListOf<Account>()
     val beneficiaries = mutableStateListOf<Beneficiary>()
+
     val transfers = quBankService.getTransfers(cid).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -54,7 +55,6 @@ class BankingViewModel(appContext: Application) : AndroidViewModel(appContext) {
         accounts.clear().let {
             accounts.addAll(quBankService.getAccounts(cid))
         }
-
     }
 
     fun addTransfer(transfer: Transfer) = viewModelScope.launch {

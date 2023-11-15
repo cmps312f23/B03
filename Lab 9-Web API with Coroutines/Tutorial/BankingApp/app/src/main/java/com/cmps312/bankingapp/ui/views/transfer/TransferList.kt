@@ -18,14 +18,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import com.cmps312.bankingapp.ui.viewmodel.BankingViewModel
 import com.cmps312.bankingapp.model.Transfer
 import com.cmps312.bankingapp.ui.navigation.Screen
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferList(bankingViewModel: BankingViewModel, onTransferSelected: (String) -> Unit) {
     val transfers = bankingViewModel.transfers.collectAsState().value
+
+
 
     Scaffold(
         topBar = {
