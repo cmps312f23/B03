@@ -2,7 +2,11 @@ package com.cmps312.todolistapp.ui.view
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -56,7 +60,8 @@ fun Home(onAddProject: () -> Unit, onProjectSelected: () -> Unit) {
 fun ProjectCard(project: Project, onProjectSelected: () -> Unit) {
     Card(
         modifier = Modifier
-            .padding(10.dp).fillMaxWidth()
+            .padding(10.dp)
+            .fillMaxWidth()
             .clickable { onProjectSelected() }
 
     ) {

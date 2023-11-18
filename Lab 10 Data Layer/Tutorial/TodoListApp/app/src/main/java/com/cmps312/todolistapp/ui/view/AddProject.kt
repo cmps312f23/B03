@@ -31,24 +31,29 @@ fun AddProject(onAddProject: () -> Unit) {
     val context = LocalContext.current
 
     var projectName by remember { mutableStateOf("") }
-    Card(modifier = Modifier
-        .padding(16.dp)
-        .fillMaxWidth()
-        .fillMaxSize() ) {
+    Card(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .fillMaxSize()
+    ) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
         ) {
 
-            Text(text = "Add Project",
+            Text(
+                text = "Add Project",
                 Modifier
                     .align(
                         Alignment.CenterHorizontally
                     )
-                    .padding(16.dp), fontWeight = FontWeight.Bold)
+                    .padding(16.dp), fontWeight = FontWeight.Bold
+            )
 
-            OutlinedTextField(value = projectName,
+            OutlinedTextField(
+                value = projectName,
                 onValueChange = { projectName = it },
                 label = { Text(text = "Project Name ") },
                 modifier = Modifier
@@ -59,23 +64,27 @@ fun AddProject(onAddProject: () -> Unit) {
                     .fillMaxWidth()
             )
 
-            Button(onClick = {
-                if (
-                    projectName.isNotEmpty()
-                ) {
-                    val newProject = Project(projectName)
-                    todoViewModel.addProject(newProject)
-                    onAddProject()
-                } else {
-                    Toast.makeText(context, "Please provide all the information",
-                        Toast.LENGTH_SHORT).show()
-                }
-            },
+            Button(
+                onClick = {
+                    if (
+                        projectName.isNotEmpty()
+                    ) {
+                        val newProject = Project(projectName)
+                        todoViewModel.addProject(newProject)
+                        onAddProject()
+                    } else {
+                        Toast.makeText(
+                            context, "Please provide all the information",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                },
                 modifier = Modifier
                     .align(
                         Alignment.CenterHorizontally
                     )
-                    .padding(16.dp)) {
+                    .padding(16.dp)
+            ) {
                 Text(text = "Add Project")
             }
         }
