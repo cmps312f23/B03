@@ -2,7 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization") version "1.9.10"
-    id ("com.google.devtools.ksp") version "1.9.10-1.0.13"
+    id("com.google.devtools.ksp") version "1.9.10-1.0.13"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -75,18 +76,35 @@ dependencies {
     val navVersion = "2.7.5"
     implementation("androidx.navigation:navigation-compose:$navVersion")
 
-    // Room
-    val roomVersion = "2.6.0"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    // Kotlin Symbol Processing (KSP) - for processing annotations
-    ksp("androidx.room:room-compiler:$roomVersion")
-    // Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:$roomVersion")
-
-    // Kotlin Datetime
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+//    // Room
+//    val roomVersion = "2.6.0"
+//    implementation("androidx.room:room-runtime:$roomVersion")
+//    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+//    // Kotlin Symbol Processing (KSP) - for processing annotations
+//    ksp("androidx.room:room-compiler:$roomVersion")
+//    // Kotlin Extensions and Coroutines support for Room
+//    implementation("androidx.room:room-ktx:$roomVersion")
+//
+//    // Kotlin Datetime
+//    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
+//
 
     // Required to be able to use collectAsStateWithLifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+
+    //Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation("com.google.firebase:firebase-firestore:24.9.1")
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
+
+    // Add the dependencies for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
 }

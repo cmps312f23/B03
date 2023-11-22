@@ -11,8 +11,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.cmps312.todolistapp.entity.Project
-import com.cmps312.todolistapp.entity.Todo
+import com.cmps312.todolistapp.model.Project
+import com.cmps312.todolistapp.model.Todo
 import com.cmps312.todolistapp.ui.view.ProjectEditor
 import com.cmps312.todolistapp.ui.view.ProjectScreen
 import com.cmps312.todolistapp.ui.view.TodoEditor
@@ -32,7 +32,7 @@ fun AppNavHost(navHostController: NavHostController, paddingValues: PaddingValue
 
         composable(route = Screen.ProjectScreen.route) {
             ProjectScreen(
-                projects = todolistViewModel.projectsFlow.collectAsStateWithLifecycle().value,
+                projects = todolistViewModel.projectsFlow.collectAsStateWithLifecycle(initialValue = emptyList()).value,
                 onAddProject = {
                     todolistViewModel.isEditMode = false
                     navHostController.navigate(Screen.ProjectEditor.route)
@@ -61,7 +61,10 @@ fun AppNavHost(navHostController: NavHostController, paddingValues: PaddingValue
                     todolistViewModel.selectedProject else
                     Project(""),
                 onSubmitProject = {
-                    todolistViewModel.upsertProject(it)
+                    if (todolistViewModel.isEditMode)
+                        todolistViewModel.updateProject(it)
+                    else
+                        todolistViewModel.addProject(it)
                     todolistViewModel.isEditMode = false
                     navHostController.navigate(Screen.ProjectScreen.route) {
                         launchSingleTop = true
@@ -89,7 +92,10 @@ fun AppNavHost(navHostController: NavHostController, paddingValues: PaddingValue
         composable(route = Screen.TodoEditor.route) {
             val todo = Todo(pid = todolistViewModel.selectedProject.id)
             TodoEditor(todo, onSubmitTodo = {
-                todolistViewModel.addTodo(it)
+                if (todolistViewModel.isEditMode)
+                    todolistViewModel.updateTodo(todo)
+                else
+                    todolistViewModel.addTodo(it)
                 navHostController.navigate(Screen.TodoScreen.route) {
                     launchSingleTop = true
                     popUpTo(Screen.TodoScreen.route) {

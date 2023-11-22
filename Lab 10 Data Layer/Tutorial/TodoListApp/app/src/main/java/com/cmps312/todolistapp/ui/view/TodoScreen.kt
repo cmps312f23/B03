@@ -19,8 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.cmps312.todolistapp.entity.Project
-import com.cmps312.todolistapp.entity.Todo
+import com.cmps312.todolistapp.model.Project
+import com.cmps312.todolistapp.model.Todo
 
 
 @Composable
@@ -59,7 +59,7 @@ fun TodoCard(todo: Todo, onDeleteTodo: () -> Unit) {
             .padding(10.dp)
             .fillMaxWidth()
     ) {
-        Row(modifier = Modifier.padding(15.dp) , verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = Modifier.padding(15.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f))
             {
                 Text(text = "Task Name:${todo.title}")

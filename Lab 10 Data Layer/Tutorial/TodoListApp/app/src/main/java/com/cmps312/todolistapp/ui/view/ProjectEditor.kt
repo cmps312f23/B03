@@ -2,7 +2,6 @@ package com.cmps312.todolistapp.ui.view
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -19,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.cmps312.todolistapp.entity.Project
+import com.cmps312.todolistapp.model.Project
 
 @Composable
 fun ProjectEditor(onSubmitProject: (Project) -> Unit, project: Project) {

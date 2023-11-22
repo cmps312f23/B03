@@ -4,8 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.cmps312.todolistapp.entity.Project
-import com.cmps312.todolistapp.entity.Todo
+import com.cmps312.todolistapp.model.Project
+import com.cmps312.todolistapp.model.Todo
 import com.cmps312.todolistapp.repository.TodoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class TodolistViewModel(appContext: Application) : AndroidViewModel(appContext) {
 
-    private val todoRepository by lazy { TodoRepository(appContext) }
+    private val todoRepository by lazy { TodoRepository() }
     var projectsFlow = todoRepository.observeProjects().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -29,13 +29,13 @@ class TodolistViewModel(appContext: Application) : AndroidViewModel(appContext) 
     var isEditMode = false
 
     fun getTodos(project: Project) {
-        todos = todoRepository.getTodoListByProject(project.id)
-        Log.d("TAG", "getTodos: $project.id $project.name")
-    }
-
-    fun addTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
-            todoRepository.upsertTodo(todo)
+            todos = todoRepository.observeTodos(project.id).stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList()
+            )
+            Log.d("TAG", "getTodos: $project.id $project.name")
         }
     }
 
@@ -45,15 +45,27 @@ class TodolistViewModel(appContext: Application) : AndroidViewModel(appContext) 
         }
     }
 
-    fun updateTodo(todo: Todo) {
+    fun addTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
-            todoRepository.upsertTodo(todo)
+            todoRepository.addTodo(todo)
         }
     }
 
-    fun upsertProject(project: Project) {
+    fun updateTodo(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
-            todoRepository.upsertProject(project)
+            todoRepository.updateTodo(todo)
+        }
+    }
+
+    fun addProject(project: Project) {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoRepository.addProject(project)
+        }
+    }
+
+    fun updateProject(project: Project) {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoRepository.updateProject(project)
         }
     }
 
@@ -62,8 +74,6 @@ class TodolistViewModel(appContext: Application) : AndroidViewModel(appContext) 
             todoRepository.deleteProject(project)
         }
     }
-
-
 
 
 }

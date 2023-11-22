@@ -1,7 +1,6 @@
 package com.cmps312.todolistapp.ui.view
 
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,10 +34,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cmps312.todolistapp.R
-import com.cmps312.todolistapp.entity.Todo
-import com.cmps312.todolistapp.ui.viewmodel.TodolistViewModel
+import com.cmps312.todolistapp.model.Todo
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -48,7 +45,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodoEditor( todo: Todo , onSubmitTodo: (Todo) -> Unit ) {
+fun TodoEditor(todo: Todo, onSubmitTodo: (Todo) -> Unit) {
     val context = LocalContext.current
 
     var todoTask by remember { mutableStateOf("") }

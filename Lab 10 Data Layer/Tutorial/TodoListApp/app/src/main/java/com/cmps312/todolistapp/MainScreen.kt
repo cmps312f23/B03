@@ -6,7 +6,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -61,7 +60,7 @@ fun TopBar(navHostController: NavHostController, currentRoute: String?) {
                     contentDescription = "Back",
                     modifier = Modifier.clickable { navHostController.popBackStack() },
                     tint = MaterialTheme.colorScheme.onSecondary
-                    )
+                )
         },
         colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary)
         //Provide the navigation Icon ( Icon on the left to toggle drawer)

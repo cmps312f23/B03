@@ -1,32 +1,82 @@
 package com.cmps312.todolistapp.repository
 
-import android.app.Application
-import com.cmps312.todolistapp.datasource.local.TodoDB
-import com.cmps312.todolistapp.entity.Project
-import com.cmps312.todolistapp.entity.ProjectWithTodos
-import com.cmps312.todolistapp.entity.Todo
+import android.util.Log
+import com.cmps312.todolistapp.model.Project
+import com.cmps312.todolistapp.model.Todo
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 
-class TodoRepository(appContext: Application) {
+class TodoRepository {
 
-    private val projectDao by lazy {
-        TodoDB.getDatabase(appContext).projectDao()
+    private val db: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
+    private val projectDocumentsRef by lazy { db.collection("projects") }
+    private val todoDocumentsRef by lazy { db.collection("todos") }
+
+    fun observeProjects(): Flow<List<Project>> = callbackFlow {
+        val snapshot = projectDocumentsRef
+            .addSnapshotListener { value, e ->
+                if (e != null)
+                    return@addSnapshotListener
+                val projects = value!!.toObjects(Project::class.java)
+                if (projects != null)
+                    this.trySend(projects)
+            }
+        awaitClose {
+            snapshot.remove()
+        }
     }
 
-    private val todoDao by lazy {
-        TodoDB.getDatabase(appContext).todoDao()
+    fun addProject(project: Project) = projectDocumentsRef.add(project)
+        .addOnSuccessListener { Log.d("TAG", "Successfully added project: ") }
+        .addOnFailureListener { Log.d("TAG", "Failed to add project: ") }
+
+
+    fun updateProject(project: Project) = projectDocumentsRef.document(project.id).set(project)
+
+    suspend fun deleteProject(project: Project) {
+        val todos = getTodoListByProject(project.id)
+        todos.forEach { todo ->
+            deleteTodo(todo).await()
+        }
+        projectDocumentsRef.document(project.id).delete().await()
     }
 
-    fun observeProjects(): Flow<List<Project>> = projectDao.observeProjects()
-    suspend fun upsertProject(project: Project) = projectDao.upsertProject(project)
-    suspend fun deleteProject(project: Project) = projectDao.deleteProject(project)
-    fun getProjectWithTodos(): List<ProjectWithTodos> = projectDao.getProjectWithTodos()
+    fun observeTodos(pid: String): Flow<List<Todo>> = callbackFlow {
+        val snapshot = todoDocumentsRef
+            .whereEqualTo("pid", pid)
+            .addSnapshotListener { value, e ->
+                if (e != null) {
+                    Log.d("observeTodos", e.stackTraceToString())
+                    return@addSnapshotListener
+                }
+                val todos = value!!.toObjects(Todo::class.java)
+                if (todos.isNotEmpty())
+                    this.trySend(todos)
+            }
+        awaitClose {
+            snapshot.remove()
+        }
+    }
 
-    fun observeTodos(pid: Int): Flow<List<Todo>> = todoDao.observeTodos(pid)
-    suspend fun getTodo(id: Int): Todo = todoDao.getTodo(id)
-    suspend fun upsertTodo(todo: Todo): Long = todoDao.upsertTodo(todo)
-    suspend fun deleteTodo(todo: Todo): Int = todoDao.deleteTodo(todo)
-    fun getTodoListByProject(id: Int): Flow<List<Todo>> = todoDao.getTodoListByProject(id)
+    suspend fun getTodo(id: String): Todo =
+        todoDocumentsRef
+            .document(id)
+            .get().await().toObject(Todo::class.java)!!
 
+    suspend fun addTodo(todo: Todo) =
+        todoDocumentsRef.add(todo)
+            .addOnSuccessListener { Log.d("TAG", "Successfully added: ") }
+            .addOnFailureListener { Log.d("TAG", "Failed: ") }
 
+    fun updateTodo(todo: Todo) = todoDocumentsRef.document(todo.id).set(todo)
+    fun deleteTodo(todo: Todo) = todoDocumentsRef.document(todo.id).delete()
+
+    suspend fun getTodoListByProject(pid: String): List<Todo> = todoDocumentsRef
+        .whereEqualTo("pid", pid)
+        .get()
+        .await()
+        .toObjects(Todo::class.java)
 }
