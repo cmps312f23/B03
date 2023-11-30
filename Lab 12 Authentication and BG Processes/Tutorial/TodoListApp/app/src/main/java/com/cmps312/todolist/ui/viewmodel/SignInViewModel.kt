@@ -1,10 +1,10 @@
 package com.cmps312.todolist.ui.viewmodel
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.cmps312.todolist.R
 import com.cmps312.todolist.model.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,14 +17,35 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 
     private val _user: MutableStateFlow<User?> = MutableStateFlow(null)
     val user: StateFlow<User?> = _user
-    var userRegistratedSuccessfully = MutableStateFlow(false)
+    var userRegisteredSuccessfully = MutableStateFlow(false)
 
     init {
-//        Todo initialize the user if the user is already logged in
+        if (auth.currentUser != null) {
+//            val email = auth.currentUser?.email
+//            val displayName = email!!.split("@")[0]
+//            val user = User(displayName, email)
+//            _user.value = user
+            v
+            _user.value = User(auth.currentUser?.email, auth.currentUser?.email.split("@")[0]))
+            Toast.makeText(
+                context,
+                context.getString(R.string.welcome_back, auth.currentUser?.email.split("@")[0]),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     fun registerUser(email: String, password: String) = viewModelScope.launch {
 //        Todo
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    userRegisteredSuccessfully.value = true
+                } else {
+                    Toast.makeText(context,
+                        context.getString(R.string.registration_failed), Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     fun signIn(email: String, password: String) = viewModelScope.launch {
