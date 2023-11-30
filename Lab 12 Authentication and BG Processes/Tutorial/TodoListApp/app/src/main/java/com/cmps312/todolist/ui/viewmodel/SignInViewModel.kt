@@ -25,11 +25,11 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 //            val displayName = email!!.split("@")[0]
 //            val user = User(displayName, email)
 //            _user.value = user
-            v
-            _user.value = User(auth.currentUser?.email, auth.currentUser?.email.split("@")[0]))
+
+            _user.value = User(auth.currentUser?.email!!, auth.currentUser?.email!!.split("@")[0])
             Toast.makeText(
                 context,
-                context.getString(R.string.welcome_back, auth.currentUser?.email.split("@")[0]),
+                context.getString(R.string.welcome_back, auth.currentUser?.email!!.split("@")[0]),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -42,14 +42,30 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                 if (it.isSuccessful) {
                     userRegisteredSuccessfully.value = true
                 } else {
-                    Toast.makeText(context,
-                        context.getString(R.string.registration_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.registration_failed), Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }
 
     fun signIn(email: String, password: String) = viewModelScope.launch {
 //        Todo
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    _user.value = User(auth.currentUser?.email!!, auth.currentUser?.email!!.split("@")[0])
+                } else {
+                    _user.value = null
+                    Toast.makeText(context,
+                        context.getString(R.string.either_user_name_or_password_is_wrong), Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
+    fun signOut(){
+        auth.signOut()
+        _user.value = null
+    }
 }

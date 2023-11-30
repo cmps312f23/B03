@@ -33,7 +33,7 @@ class TodoRepository {
         if(imageUri != null)
             project.imageURL = uploadPhoto(imageUri)
 
-        project.userId = auth.currentUser?.uid
+        project.userId = auth.currentUser?.uid.toString()
         projectCollectionRef.add(project)
     }
 
